@@ -21,7 +21,7 @@ def service():
     if you want to add a new person please enter 3. \n"""))
         
     if service_input not in service_type:
-        return "\nIncorrect value. This is not an option!"
+        return "Incorrect value. This is not an option!"
     else:
         service = service_input
 
@@ -34,16 +34,16 @@ def SearchByNumber():
     try:
         number_input = int(input("Please enter phone number: "))
         if len(str(abs(number_input))) != 10:
-            return '\nThis is invalid number' 
+            return 'This is invalid number' 
         else:
             if number_input not in tele_book:
-                return "\nSorry, the number is not found!"
+                return "Sorry, the number is not found!"
             else:
                 number_owner = tele_book[number_input]
     except (KeyboardInterrupt, ValueError):
-                return "\nIncorrect value. This is not an option!"
+                return "Incorrect value. This is not an option!"
         
-    return '\nThe owner of the number is: ', number_owner
+    return 'The owner of the number is: ', number_owner
 
 
 ## Search by name function 
@@ -51,28 +51,33 @@ def SearchByName():
 
     name_input = str(input("Please enter the name: "))
     for key, value in tele_book.items():
-        if name_input == value:
+        if name_input.lower() == value.lower():
             tele_number = key
     
-    return '\nThis number belongs to: ', tele_number
+    return name_input, " number is: ", tele_number
 
 
 ## add new number function 
 def addNew():
-
-    while True:
-        try:
-            new_number = int(input('Enter Number: '))
+    try:
+        new_number = int(input('Enter Number: '))
+        if len(str(abs(new_number))) != 10:
+            return 'This is invalid number'
+        else:
             if new_number in tele_book:
-                print("This number already exists")
+                return "This number already exists"
             else:
-                new_name = str(input('Enter Name: '))
-                break
-        except (KeyboardInterrupt, ValueError):
-            return "Incorrect value. This is not an option!"
+                try:
+                    new_name = str(input('Enter Name: '))
+                except (KeyboardInterrupt, ValueError):
+                    return "Incorrect value. This is not an option!"
+
+    except (KeyboardInterrupt, ValueError):
+        return "Incorrect value. This is not an option!"
 
     tele_book[new_number] = new_name 
-    return '\nName and number added successfully', new_number, new_name 
+    return 'Name and number added successfully', new_number, new_name 
+    # return tele_book
 
 
 while True:
