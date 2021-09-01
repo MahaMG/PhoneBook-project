@@ -12,3 +12,6 @@ Description:
 Credits
 - This program is a practice for the Python course in Satr Academy. 
 https://satr.codes/courses/09ab669c-2f91-459d-9c5a-66cbb626f2a5/view
+- Count number of digits in a number in Python
+https://www.codevscolor.com/count-number-digits-number-python
+- 
