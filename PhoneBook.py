@@ -1,4 +1,3 @@
-from tabulate import tabulate
 
 # Dictionary for phone book with person name and number
 tele_book = {
@@ -19,10 +18,10 @@ def service():
     service_input = int(input(""" What service do you want?
     If you want to search by phone number please enter 1, 
     if you want to search by person name please enter 2, 
-    if you want to add a new person please enter 3."""))
+    if you want to add a new person please enter 3. \n"""))
         
     if service_input not in service_type:
-        print("Incorrect value. This is not an option!")
+        return "\nIncorrect value. This is not an option!"
     else:
         service = service_input
 
@@ -31,34 +30,36 @@ def service():
 
 ## Search by number function 
 def SearchByNumber():
-    print('function 1 Search by number')
 
-    number_input = int(input("Please enter phone number: "))
-    if number_input not in tele_book:
-        print("Incorrect value. This is not an option!")
-    else:
-        number_owner = tele_book[number_input]
+    try:
+        number_input = int(input("Please enter phone number: "))
+        if len(str(abs(number_input))) != 10:
+            return '\nThis is invalid number' 
+        else:
+            if number_input not in tele_book:
+                return "\nSorry, the number is not found!"
+            else:
+                number_owner = tele_book[number_input]
+    except (KeyboardInterrupt, ValueError):
+                return "\nIncorrect value. This is not an option!"
         
-    return number_owner
-
-# print(SearchByNumber())
+    return '\nThe owner of the number is: ', number_owner
 
 
 ## Search by name function 
 def SearchByName():
-    print('function 2 Search by name')
 
     name_input = str(input("Please enter the name: "))
     for key, value in tele_book.items():
         if name_input == value:
             tele_number = key
     
-    return tele_number
+    return '\nThis number belongs to: ', tele_number
 
 
 ## add new number function 
 def addNew():
-    print('function 3 add new')
+
     while True:
         try:
             new_number = int(input('Enter Number: '))
@@ -68,24 +69,23 @@ def addNew():
                 new_name = str(input('Enter Name: '))
                 break
         except (KeyboardInterrupt, ValueError):
-            print("Incorrect value. This is not an option!")
+            return "Incorrect value. This is not an option!"
 
     tele_book[new_number] = new_name 
-    return new_number, new_name 
-
+    return '\nName and number added successfully', new_number, new_name 
 
 
 while True:
     Service = service()
     while True:
         if Service == 1:
-            print('The owner of the number is: ', SearchByNumber())
+            print(SearchByNumber())
             break
         elif Service == 2:
-            print('This number belongs to: ', SearchByName())
+            print(SearchByName())
             break
         elif Service == 3:
-            print('Name and number added successfully', addNew())
+            print(addNew())
             break
 
     restart = input('\nWould you like to restart? Enter yes or no.\n')
